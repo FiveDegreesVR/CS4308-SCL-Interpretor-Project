@@ -6,6 +6,7 @@ def remove_items(test_list, item):
 
 
 # group 6 (Allen Smith, Nikita Smith, Josh Poore, Cole Young)
+# TODO: Make this into a function that will be called by the token creator
 if __name__ == '__main__':
     file = open('areacir.scl', 'r')
 
