@@ -40,9 +40,10 @@ def filter_file(File_name):
 
             lineTokens.append(strStatement)
 
-            afterStatementTokens = afterStr.split(' ')
-            for token in afterStatementTokens:
-                lineTokens.append(token)
+            if afterStr != '\n':
+                afterStatementTokens = afterStr.split(' ')
+                for token in afterStatementTokens:
+                    lineTokens.append(token)
 
             lineList.append(lineTokens)
             continue
@@ -93,10 +94,11 @@ def filter_file(File_name):
     # \n filter
     loopCount = 0
     for line in lineList:
-        modifiedStr = line[len(line) - 1]
-        modifiedStr = modifiedStr[:-1]
-        line[len(line) - 1] = modifiedStr
-        lineList[loopCount] = line
+        if '\n' in line[len(line) - 1]:
+            modifiedStr = line[len(line) - 1]
+            modifiedStr = modifiedStr[:-1]
+            line[len(line) - 1] = modifiedStr
+            lineList[loopCount] = line
         loopCount += 1
 
     # line comment filter
@@ -163,7 +165,10 @@ def filter_file(File_name):
 
 
 # group 6 (Allen Smith, Nikita Smith, Josh Poore, Cole Young)
-# TODO: Make this into a function that will be called by the token creator
+# TODO: 1. turn output list into token obj with token type, token id, and value (whats stored in the token)
+# TODO: 2. print tokens to JSON file + console at runtime
+# TODO: 3. feed in .scl file through argument when calling "main" (ex: "python scl_scanner.py areacir.py" for scanning areacir.py)
+
 if __name__ == '__main__':
-    Area_cir = filter_file("welcome.scl")
+    Area_cir = filter_file("areacir.scl")
 
