@@ -208,12 +208,10 @@ def merge_dictionaries(dict1, dict2):
 
 
 # group 6 (Allen Smith, Nikita Smith, Josh Poore, Cole Young)
-# TODO: 1. turn output list into token obj with token type, token id, and value (whats stored in the token)
-# TODO: 2. print tokens to JSON file + console at runtime
-# TODO: 3. feed in .scl file through argument when calling "main" (ex: "python scl_scanner.py areacir.py" for scanning areacir.py)
+# TODO: 1. feed in .scl file through argument when calling "main" (ex: "python scl_scanner.py areacir.py" for scanning areacir.py)
 
 if __name__ == '__main__':
-    ItemList = filter_file("areacir.scl")
+    ItemList = filter_file("welcome.scl")
 
     finalTokenList = []
     megaDict = {}
@@ -250,11 +248,24 @@ if __name__ == '__main__':
 
     jsonFile = open("OutputTokens.json", "w")
 
+    loopCounter = 0
+    for Token in finalTokenList:
+        tokenStr = "Token_"+loopCounter.__str__()
+        megaDict.update({tokenStr: {}})
+        loopCounter += 1
+
+    loopCounter = 0
     for Token in finalTokenList:
         tokenData = Token.getData()
         lst = ['Type', tokenData[0], 'id', tokenData[1], 'value', tokenData[2]]
         newList = Convert(lst)
-        megaDict = megaDict | newList
+
+        tokenStr = "Token_" + loopCounter.__str__()
+
+        megaDict[tokenStr].update(newList)
+        loopCounter += 1
+
+
 
     json_object = json.dumps(megaDict, indent=4)
     jsonFile.write(json_object)
