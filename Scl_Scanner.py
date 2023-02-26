@@ -179,7 +179,7 @@ def merge_dictionaries(dict1, dict2):
 if __name__ == '__main__':
     sysArgv = sys.argv  # scan file from sys argvs
 
-    ItemList = filter_file('avearray.scl')  # create token list from file
+    ItemList = filter_file(sysArgv[1])  # create token list from file
 
     finalTokenList = []
     megaDict = {}
