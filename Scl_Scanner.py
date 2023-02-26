@@ -3,11 +3,7 @@ import json
 import sys
 
 
-# kw = Token.keywords()
-# id = Token.identifiers()
-# op = Token.operators()
-# lit = Token.literals()
-# spS = Token.specialSymbols()
+# group 6 (Allen Smith, Nikita Smith, Josh Poore, Cole Young)
 
 def remove_items(test_list, item):
     # using list comprehension to perform the task
@@ -33,12 +29,13 @@ def filter_file(File_name):
 
     for line in file:
         lineTokens = []
+
+        # create string statement tokens using "
         if '"' in line:
             splitLocation = line.find('"')
             beforeStr = line[:splitLocation]
             afterStr = line[splitLocation:]
             secondSplitLocation = splitLocation + afterStr[1:].find('"') + 1
-            thirdSplitLocation = afterStr[1:].find('"')
             strStatement = line[splitLocation:secondSplitLocation + 1]
             afterStr = line[secondSplitLocation + 1:]
 
@@ -56,12 +53,12 @@ def filter_file(File_name):
             lineList.append(lineTokens)
             continue
 
+        # split statements tokens using ^
         if '^' in line:
             splitLocation = line.find('^')
             beforeStr = line[:splitLocation]
             afterStr = line[splitLocation:]
             secondSplitLocation = splitLocation + afterStr[1:].find('^') + 1
-            thirdSplitLocation = afterStr[1:].find('^')
             strStatement = line[splitLocation:secondSplitLocation + 1]
             afterStr = line[secondSplitLocation + 1:]
 
@@ -78,6 +75,7 @@ def filter_file(File_name):
             lineList.append(lineTokens)
             continue
 
+        # split lines into tokens using ' '
         lineTokens = line.split(' ')
 
         # Filters Block Comments (Proof of Concept, need to implement temp for changes)
@@ -93,26 +91,6 @@ def filter_file(File_name):
         if commentEnd in line:
             Comment = False
         # End of Block comment filter
-
-    # for line in file:
-    #
-    #     lineTokens = line.split(' ')
-    #
-    #     # Filters Block Comments (Proof of Concept, need to implement temp for changes)
-    #     commentStart = "/*"
-    #     commentEnd = "*/"
-    #
-    #     if commentStart in line:
-    #         Comment = True
-    #
-    #     if not Comment:
-    #         lineList.append(lineTokens)
-    #
-    #     if commentEnd in line:
-    #         Comment = False
-    # End of Block comment filter
-
-    # Need to do \n thing here
 
     # Empty space token filter
     loopCount = 0
@@ -145,53 +123,10 @@ def filter_file(File_name):
 
     lineList = list(filter(None, lineList))
 
-    # Split '"' into separate tokens
-    # loopCount = 0
-    # for line in lineList:
-    #     newLine = []
-    #
-    #     for token in line:
-    #         # covers if " is at the beginning of the token
-    #         if '"' in token[0] and len(token) > 1:
-    #             idx = token.index('"')
-    #             newLine.append('"')
-    #             newLine.append(token[1:])
-    #         else:
-    #             newLine.append(token)
-    #
-    #         # covers if " is at the end of the token
-    #         if '"' in newLine[len(newLine) - 1]:
-    #             newLine[len(newLine) - 1] = newLine[len(newLine) - 1].removesuffix('"')
-    #             newLine.append('"')
-    #
-    #     lineList[loopCount] = newLine
-    #     loopCount += 1
-
-    # print final filtered list
-    # for line in lineList:
-    #     print(line)
-
     return lineList
 
 
-# def printToken(fileList, kw, id, op, lit, spS)
-#     for each x in lineList
-#         for each i in keywords
-#                 if lineList[x] == keywords[i]
-#                 print('Next token is:' + keywordsID[i] + 'Next lexeme is ' + lineList[i]
-#         for each i in identifiers
-#             if lineList[x] == identifiers[i]
-#                 print('Next token is:' + identifiersID[i] + 'Next lexeme is ' + lineList[i]
-#         for each i in operators
-#             if lineList[x] == operators[i]
-#                 print('Next token is:' + operatorsID[i] + 'Next lexeme is ' + lineList[i]
-#         for each i in literals
-#             if lineList[x] == literals[i]
-#                 print('Next token is:' + literalsID[0] + 'Next lexeme is ' + lineList[i]
-#         for each i in specialSymbols
-#             if lineList[x] == specialSymbols[i]
-#                 print('Next token is:' + specialSymbolsID[i] + 'Next lexeme is ' + lineList[i]
-
+# checks if a string is a float
 def isfloat(num):
     try:
         float(num)
@@ -200,51 +135,47 @@ def isfloat(num):
         return False
 
 
+# converts list to dictonary
 def Convert(a):
     it = iter(a)
     res_dct = dict(zip(it, it))
     return res_dct
 
 
+# adds two dictonaries together
 def merge_dictionaries(dict1, dict2):
     merged_dict = dict1.copy()
     merged_dict.update(dict2)
     return merged_dict
 
 
-# group 6 (Allen Smith, Nikita Smith, Josh Poore, Cole Young)
-# TODO: 1. feed in .scl file through argument when calling "main" (ex: "python scl_scanner.py areacir.py" for scanning areacir.py)
-
+# main scanner method
 if __name__ == '__main__':
-    sysArgv = sys.argv
+    sysArgv = sys.argv  # scan file from sys argvs
 
-    ItemList = filter_file(sysArgv[1])
+    ItemList = filter_file(sysArgv[1])  # create token list from file
 
     finalTokenList = []
     megaDict = {}
 
+    # turn all tokens in list to appropriate token objs
+    # print said tokens to console
     for Items in ItemList:
         for TokenItem in Items:
-            # create token object
-            # print to console
-            # save to json
             if TokenItem in tokenList["keywords"]:
                 newToken = Token('keywords', tokenList["keywords"][TokenItem], TokenItem)
-
-            if TokenItem in tokenList["identifiers"]:
+            elif TokenItem in tokenList["identifiers"]:
                 newToken = Token('identifiers', tokenList["identifiers"][TokenItem], TokenItem)
-
-            if TokenItem in tokenList["operators"]:
+            elif TokenItem in tokenList["operators"]:
                 newToken = Token('operators', tokenList["operators"][TokenItem], TokenItem)
-
-            if TokenItem in tokenList["specialSymbols"]:
+            elif TokenItem in tokenList["specialSymbols"]:
                 newToken = Token('specialSymbols', tokenList["specialSymbols"][TokenItem], TokenItem)
-
-            if TokenItem[0] == '"' and TokenItem[len(TokenItem) - 1] == '"':
+            elif TokenItem[0] == '"' and TokenItem[len(TokenItem) - 1] == '"':
                 newToken = Token('literals', 600, TokenItem)
-
-            if isfloat(TokenItem):
+            elif isfloat(TokenItem):
                 newToken = Token('literals', 600, TokenItem)
+            else:
+                newToken = Token('UNKNOWN', 1200, TokenItem) # in case no token is recognized
 
             finalTokenList.append(newToken)
             print("New Token created: ", newToken.getData())
@@ -253,11 +184,12 @@ if __name__ == '__main__':
         finalTokenList.append(newToken)
         print("New Token created: ", newToken.getData())
 
+    # create json file by converting token obj list into a dictionary
     jsonFile = open("OutputTokens.json", "w")
 
     loopCounter = 0
     for Token in finalTokenList:
-        tokenStr = "Token_"+loopCounter.__str__()
+        tokenStr = "Token_" + loopCounter.__str__()
         megaDict.update({tokenStr: {}})
         loopCounter += 1
 
