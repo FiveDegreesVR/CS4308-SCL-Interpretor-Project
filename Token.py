@@ -33,7 +33,14 @@ tokenList = {
         'reverse': 29,
         'while': 30,
         'endwhile': 31,
-        'call': 32
+        'call': 32,
+        'constants': 33,
+        'float': 34,
+        'array': 35,
+        'for': 36,
+        'to': 37,
+        'do': 38,
+        'endfor': 39
     },
 
     "identifiers": {
@@ -42,7 +49,14 @@ tokenList = {
         'area': 202,
         'cir': 203,
         'pchar': 204,
-        'j': 205
+        'j': 205,
+        'N': 206,
+        'sum': 207,
+        'ave': 208,
+        'svalue': 209,
+        'num': 210,
+        'varr': 211,
+        'varr[j]': 212 # TODO: this needs to be fixed for deliverable 2
     },
 
     "operators": {
@@ -54,14 +68,16 @@ tokenList = {
         '>': 405,
         '<': 406,
         '"': 407,
-        '=': 408
+        '=': 408,
+        'add': 409
     },
 
     "specialSymbols": {
         ',': 800,
         '.': 801,
         'PI': 802,
-        'M_PI': 803
+        'M_PI': 803,
+        '[N]': 804
     }
 }
 

@@ -53,12 +53,35 @@ def filter_file(File_name):
             lineList.append(lineTokens)
             continue
 
+        # TODO: turn this into a callable function
         # split statements tokens using ^
         if '^' in line:
             splitLocation = line.find('^')
             beforeStr = line[:splitLocation]
             afterStr = line[splitLocation:]
             secondSplitLocation = splitLocation + afterStr[1:].find('^') + 1
+            strStatement = line[splitLocation:secondSplitLocation + 1]
+            afterStr = line[secondSplitLocation + 1:]
+
+            beforeStatementTokens = beforeStr.split(' ')
+            for token in beforeStatementTokens:
+                lineTokens.append(token)
+
+            lineTokens.append(strStatement)
+
+            afterStatementTokens = afterStr.split(' ')
+            for token in afterStatementTokens:
+                lineTokens.append(token)
+
+            lineList.append(lineTokens)
+            continue
+
+        # split statements tokens using ^
+        if '<' in line:
+            splitLocation = line.find('<')
+            beforeStr = line[:splitLocation]
+            afterStr = line[splitLocation:]
+            secondSplitLocation = splitLocation + afterStr[1:].find('<') + 1
             strStatement = line[splitLocation:secondSplitLocation + 1]
             afterStr = line[secondSplitLocation + 1:]
 
@@ -116,10 +139,13 @@ def filter_file(File_name):
             lineList[loopCount] = line
         loopCount += 1
 
-    # Empty Line filter
-    for line in lineList:
-        if line[0] == '':
-            lineList.remove(line)
+
+    currentLineNum = 0
+    while currentLineNum < len(lineList):
+        if lineList[currentLineNum][0] == '':
+            lineList.remove(lineList[currentLineNum])
+        else:
+            currentLineNum += 1
 
     lineList = list(filter(None, lineList))
 
@@ -153,7 +179,7 @@ def merge_dictionaries(dict1, dict2):
 if __name__ == '__main__':
     sysArgv = sys.argv  # scan file from sys argvs
 
-    ItemList = filter_file(sysArgv[1])  # create token list from file
+    ItemList = filter_file('avearray.scl')  # create token list from file
 
     finalTokenList = []
     megaDict = {}

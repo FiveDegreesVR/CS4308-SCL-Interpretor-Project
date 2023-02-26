@@ -1,0 +1,33 @@
+import "scl.h"
+
+implementations
+
+/*
+ description
+    This program computes the average of the 
+    elements values in array varr. 
+*/
+
+function main is
+constants
+    define N of type integer = 100    // max number of elements in the array
+variables
+   define sum of type float
+   define ave of type float    // average value
+   define svalue of type float
+   define j of type integer
+   define num of type integer
+   define varr array [N] of type float
+begin
+   input "Enter number of values to store", num
+   for j = 0 to j < num do
+       input "Enter element value: ", svalue
+       set varr[j] = svalue
+   endfor
+   set sum = 0.0
+   for j = 0 to j< num do
+        add varr[j] to sum
+   endfor
+   set ave = sum / num
+   display "Average value in array: ", ave
+endfun main
