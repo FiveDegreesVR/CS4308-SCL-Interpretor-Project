@@ -56,7 +56,7 @@ tokenList = {
         'svalue': 209,
         'num': 210,
         'varr': 211,
-        'varr[j]': 212 # TODO: this needs to be fixed for deliverable 2
+        'varr[j]': 212 # TODO: this needs to be fixed for deliverable 2 #Needs to be made dynamic
     },
 
     "operators": {
