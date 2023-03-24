@@ -176,13 +176,16 @@ def merge_dictionaries(dict1, dict2):
 
 
 # main scanner method
-if __name__ == '__main__':
-    sysArgv = sys.argv  # scan file from sys argvs
+def GenerateTokenList(file): # scan file from sys argvs
 
-    ItemList = filter_file(sysArgv[1])  # create token list from file
+    from Token import Token
+
+    ItemList = filter_file(file)  # create token list from file
 
     finalTokenList = []
     megaDict = {}
+
+    identifierId = 200
 
     # turn all tokens in list to appropriate token objs
     # print said tokens to console
@@ -190,8 +193,6 @@ if __name__ == '__main__':
         for TokenItem in Items:
             if TokenItem in tokenList["keywords"]:
                 newToken = Token('keywords', tokenList["keywords"][TokenItem], TokenItem)
-            elif TokenItem in tokenList["identifiers"]:
-                newToken = Token('identifiers', tokenList["identifiers"][TokenItem], TokenItem)
             elif TokenItem in tokenList["operators"]:
                 newToken = Token('operators', tokenList["operators"][TokenItem], TokenItem)
             elif TokenItem in tokenList["specialSymbols"]:
@@ -200,6 +201,10 @@ if __name__ == '__main__':
                 newToken = Token('literals', 600, TokenItem)
             elif isfloat(TokenItem):
                 newToken = Token('literals', 600, TokenItem)
+            elif finalTokenList[len(finalTokenList)-1].getData()[2] == "define":
+                tokenList.update({"identifiers": {TokenItem: identifierId}})
+                newToken = Token('identifiers', tokenList["identifiers"][TokenItem], TokenItem)
+                identifierId = identifierId+1
             else:
                 newToken = Token('UNKNOWN', 1200, TokenItem) # in case no token is recognized
 

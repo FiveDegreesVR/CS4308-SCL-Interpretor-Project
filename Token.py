@@ -44,18 +44,6 @@ tokenList = {
     },
 
     "identifiers": {
-        'x': 200,
-        'r': 201,
-        'area': 202,
-        'cir': 203,
-        'pchar': 204,
-        'j': 205,
-        'N': 206,
-        'sum': 207,
-        'ave': 208,
-        'svalue': 209,
-        'num': 210,
-        'varr': 211,
         'varr[j]': 212 # TODO: this needs to be fixed for deliverable 2 #Needs to be made dynamic
     },
 
