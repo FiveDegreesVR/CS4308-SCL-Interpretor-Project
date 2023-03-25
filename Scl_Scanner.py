@@ -1,4 +1,3 @@
-from Token import *
 import json
 import sys
 
@@ -179,6 +178,9 @@ def merge_dictionaries(dict1, dict2):
 def GenerateTokenList(file): # scan file from sys argvs
 
     from Token import Token
+    from Token import tokenList
+
+    tokenListUsed = tokenList
 
     ItemList = filter_file(file)  # create token list from file
 
@@ -191,19 +193,21 @@ def GenerateTokenList(file): # scan file from sys argvs
     # print said tokens to console
     for Items in ItemList:
         for TokenItem in Items:
-            if TokenItem in tokenList["keywords"]:
-                newToken = Token('keywords', tokenList["keywords"][TokenItem], TokenItem)
-            elif TokenItem in tokenList["operators"]:
-                newToken = Token('operators', tokenList["operators"][TokenItem], TokenItem)
-            elif TokenItem in tokenList["specialSymbols"]:
-                newToken = Token('specialSymbols', tokenList["specialSymbols"][TokenItem], TokenItem)
+            if TokenItem in tokenListUsed["keywords"]:
+                newToken = Token('keywords', tokenListUsed["keywords"][TokenItem], TokenItem)
+            elif TokenItem in tokenListUsed["operators"]:
+                newToken = Token('operators', tokenListUsed["operators"][TokenItem], TokenItem)
+            elif TokenItem in tokenListUsed["identifiers"]:
+                newToken = Token('identifiers', tokenListUsed["identifiers"][TokenItem], TokenItem)
+            elif TokenItem in tokenListUsed["specialSymbols"]:
+                newToken = Token('specialSymbols', tokenListUsed["specialSymbols"][TokenItem], TokenItem)
             elif TokenItem[0] == '"' and TokenItem[len(TokenItem) - 1] == '"':
                 newToken = Token('literals', 600, TokenItem)
             elif isfloat(TokenItem):
                 newToken = Token('literals', 600, TokenItem)
             elif finalTokenList[len(finalTokenList)-1].getData()[2] == "define":
-                tokenList.update({"identifiers": {TokenItem: identifierId}})
-                newToken = Token('identifiers', tokenList["identifiers"][TokenItem], TokenItem)
+                tokenListUsed.update({"identifiers": {TokenItem: identifierId}})
+                newToken = Token('identifiers', tokenListUsed["identifiers"][TokenItem], TokenItem)
                 identifierId = identifierId+1
             else:
                 newToken = Token('UNKNOWN', 1200, TokenItem) # in case no token is recognized
