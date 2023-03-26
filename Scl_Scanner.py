@@ -187,9 +187,9 @@ def GenerateTokenList(file): # scan file from sys argvs
     finalTokenList = []
     megaDict = {}
 
+    identiferList = []
+    identiferIDList = []
     identifierId = 200
-
-    # TODO: compile all identifers into a list and then update dictonary with that full list
 
     # turn all tokens in list to appropriate token objs
     # print said tokens to console
@@ -208,7 +208,11 @@ def GenerateTokenList(file): # scan file from sys argvs
             elif isfloat(TokenItem):
                 newToken = Token('literals', 600, TokenItem)
             elif finalTokenList[len(finalTokenList)-1].getData()[2] == "define":
-                tokenListUsed.update({"identifiers": {TokenItem: identifierId}})
+                # create identifier dictionary and make is nested under identifiers in the token list dictionary
+                identiferList.append(TokenItem)
+                identiferIDList.append(identifierId)
+                identiferDict = dict(zip(identiferList,identiferIDList))
+                tokenListUsed.update({"identifiers": identiferDict})
                 newToken = Token('identifiers', tokenListUsed["identifiers"][TokenItem], TokenItem)
                 identifierId = identifierId+1
             else:
@@ -243,3 +247,5 @@ def GenerateTokenList(file): # scan file from sys argvs
 
     json_object = json.dumps(megaDict, indent=4)
     jsonFile.write(json_object)
+
+    return finalTokenList
