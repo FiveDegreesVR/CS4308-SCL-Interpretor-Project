@@ -44,7 +44,6 @@ tokenList = {
     },
 
     "identifiers": {
-        'varr[j]': 212 # TODO: this needs to be fixed for deliverable 2 #Needs to be made dynamic
     },
 
     "operators": {
@@ -57,7 +56,9 @@ tokenList = {
         '<': 406,
         '"': 407,
         '=': 408,
-        'add': 409
+        'add': 409,
+        '[': 410,
+        ']': 411
     },
 
     "specialSymbols": {

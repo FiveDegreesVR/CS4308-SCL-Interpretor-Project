@@ -97,6 +97,30 @@ def filter_file(File_name):
             lineList.append(lineTokens)
             continue
 
+        # split statements tokens using ^
+        if '[' in line:
+            splitLocation = line.find('[')
+            beforeStr = line[:splitLocation]
+            afterStr = line[splitLocation:]
+            secondSplitLocation = splitLocation + afterStr[1:].find(']') + 1
+            strStatement = line[splitLocation:secondSplitLocation + 1]
+            afterStr = line[secondSplitLocation + 1:]
+
+            beforeStatementTokens = beforeStr.split(' ')
+            for token in beforeStatementTokens:
+                lineTokens.append(token)
+
+            lineTokens.append("[")
+            lineTokens.append(strStatement[1:len(strStatement)-1])
+            lineTokens.append("]")
+
+            afterStatementTokens = afterStr.split(' ')
+            for token in afterStatementTokens:
+                lineTokens.append(token)
+
+            lineList.append(lineTokens)
+            continue
+
         # split lines into tokens using ' '
         lineTokens = line.split(' ')
 
