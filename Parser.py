@@ -114,62 +114,59 @@ class TreeNode:
         self.data = data
         self.left = str()
         self.right = str()
-        self.middle = str()
+        self.count = 0
+        self.lineCount = 0
+        self.last_data = str()
+
+    # dont ask
+    def UpdateCounts(self, lineCount):
+        self.data = "Line: " + str(lineCount)
+        lineCount += 1
+        if self.left is not str():
+            self.left.UpdateCounts(lineCount)
 
     def PrintTree(self):
-        if self.data is not str():
-            if self.data is isinstance(self.data, TreeNode):
-                self.data.PrintTree()
-            else:
-                print(self.data,"\n yo")
+        print(self.data)
         if self.right is not str():
-            if self.right is isinstance(self.right, TreeNode):
-                self.right.PrintTree()
-            else:
-                print(self.right,"\n how")
-        if self.middle is not str():
-            if self.middle is isinstance(self.middle, TreeNode):
-                self.middle.PrintTree()
-            else:
-                print(self.middle,"\n it")
+            self.right.PrintTree()
         if self.left is not str():
-            if self.left is isinstance(self.left, TreeNode):
-                self.left.PrintTree()
-            else:
-                print(self.left,"\n is")
+            self.left.PrintTree()
+
+    def iterate(self, num):
+        if self.count != 0:
+            if self.left is not str():
+                self.left.iterate(num)
+            num = num + 1
+        return num
 
     def insert(self, data):
-        if self.data is str():
-            self.data = data
-        # If current data is '('
-        elif data == '(':
-            self.left = TreeNode(data)
-
-        # If current data is an operator
-        elif data == '*' or data == '/' or data == '+' or data == '-' or data == '=':
-            self.middle = TreeNode(data)
-
-        # If current data is ')'
-        elif data == ')':
-            self.right = TreeNode(data)
-
-        # If current data is a keyword or variable
+        iterations = self.iterate(0)
+        if iterations > 0:
+            self.left.insert(data)
         else:
-            if self.left is str():
-                self.left = TreeNode(data)
+            if data == "EOS":
+                if self.left is not str():
+                    self.left.insert(self.count + 1)
+                else:
+                    self.left = TreeNode(self.count + 1)
+                self.count += 1
+            elif self.right is not str():
+                self.right.insert(data)
             elif self.right is str():
                 self.right = TreeNode(data)
-            else:
-                self.middle = TreeNode(data)
+        # if self.data is isinstance(self.data, int):
+        #     self.right = TreeNode(data)
+        #     self.right = TreeNode(data)
+
 
 #funtionality of getNextToken was fulfilled in deliverable 1
 #Read in tokens and parse out left to right, top from bottom
 
-count = -1
+countTk = -1
 
-def GetNextToken(count, tokenList):
-    count += 1
-    return tokenList[count]
+def GetNextToken(countTk, tokenList):
+    countTk += 1
+    return tokenList[countTk]
 
 if __name__ == '__main__':
     sysArgv = sys.argv  # scan file from sys argvs
@@ -177,24 +174,16 @@ if __name__ == '__main__':
     tokenList = GenerateTokenList(sysArgv[1])
 
     # example call
-    # token = GetNextToken(count, tokenList)
+    # token = GetNextToken(countTk, tokenList)
 
     # ---------------------------- Parser Code
 
-    jsonFile = open('OutputTokens.json')
-    jsonData = json.load(jsonFile)
+    root = TreeNode(0)
+    countIterate = -1
+    for item in tokenList:
+        root.insert(GetNextToken(countIterate, tokenList).value)
+        #print(GetNextToken(countIterate, tokenList).value)
+        countIterate = countIterate+1
 
-    tempList = []
-    count = 0
-    root = TreeNode(str())
-
-    for item in jsonData:
-        tempList.append(jsonData[item]['value'])
-
-    for item in jsonData:
-        if not jsonData[item]['value'] == 'EOS':
-            root.insert(tempList[count])
-        count = count + 1
-
+    root.UpdateCounts(0)
     root.PrintTree()
-
