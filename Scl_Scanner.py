@@ -189,6 +189,8 @@ def GenerateTokenList(file): # scan file from sys argvs
 
     identifierId = 200
 
+    # TODO: compile all identifers into a list and then update dictonary with that full list
+
     # turn all tokens in list to appropriate token objs
     # print said tokens to console
     for Items in ItemList:
