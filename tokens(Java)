@@ -1,0 +1,135 @@
+import java.util.*;
+
+public class Tokens {
+    static Hashtable<String, String> keywords = new Hashtable<>();
+    static Hashtable<String, String> operators = new Hashtable<>();
+    static Hashtable<String, String> specialSymbols = new Hashtable<>();
+
+    public static void main(String[] args)
+    {
+        Hashtable<String, Hashtable> test = new Hashtable<String, Hashtable>();
+        test = getTokens();
+        printTokens(test, "0"); //for testing purposes
+    }
+
+    //public static void printTokens(Hashtable<String, Hashtable> tokenList, String id){
+    public static void printTokens(Hashtable<String, Hashtable> tokenList, String id){
+        for(int i = 0; i < tokenList.size(); i++)
+        {
+            id = Integer.toString(i);
+            System.out.println("Value of test id "+ i + ": "+tokenList.get(id));
+        }
+    }
+
+    public static void setTokens() //Adds the required tokens to their respective hashtables (either keywords, operators, or special symbols)
+    {
+        //keywords hash table:
+        keywords.put("0","import");
+        keywords.put("1", "implementations");
+        keywords.put("2", "function");
+        keywords.put("3", "main");
+        keywords.put("4", "return");
+        keywords.put("5", "type");
+        keywords.put("6", "integer");
+        keywords.put("7", "double");
+        keywords.put("8", "char");
+        keywords.put("9", "num");
+        keywords.put("10", "is");
+        keywords.put("11", "variables");
+        keywords.put("12", "define");
+        keywords.put("13", "of");
+        keywords.put("14", "begin");
+        keywords.put("15", "display");
+        keywords.put("16", "set");
+        keywords.put("17", "exit");
+        keywords.put("18", "endfun");
+        keywords.put("19", "symbol");
+        keywords.put("20", "end");
+        keywords.put("21", "input");
+        keywords.put("22", "structures");
+        keywords.put("23", "pointer");
+        keywords.put("24", "head");
+        keywords.put("25", "last");
+        keywords.put("26", "NULL");
+        keywords.put("27", "ChNode");
+        keywords.put("28", "using");
+        keywords.put("29", "reverse");
+        keywords.put("30", "while");
+        keywords.put("31", "endwhile");
+        keywords.put("32", "call");
+        keywords.put("33", "constants");
+        keywords.put("34", "float");
+        keywords.put("35", "array");
+        keywords.put("36", "for");
+        keywords.put("37", "to");
+        keywords.put("38", "do");
+        keywords.put("39", "endfor");
+
+        //Operators hash table:
+        operators.put("400", "+");
+        operators.put("401", "-");
+        operators.put("402", "*");
+        operators.put("403", "/");
+        operators.put("404", "^");
+        operators.put("405", ">");
+        operators.put("406", ">");
+        operators.put("407", "'"); //Potential error. had to substitute " for ' -AS
+        operators.put("408", "=");
+        operators.put("409", "add");
+        operators.put("410", "[");
+        operators.put("411", "]");
+
+        //Special symbols hash table:
+        specialSymbols.put("800", ",");
+        specialSymbols.put("801", ".");
+        specialSymbols.put("802", "PI");
+        specialSymbols.put("803", "M_PI");
+    }
+
+    /*public static void getKeywords(){
+
+    }
+    public static void getOperators()
+    {
+
+    }
+    public static void getSpecialSymbols()
+    {
+
+    } //*/
+
+    //Equivalent of getData from tokens.py?
+    public static Hashtable<String, Hashtable> getTokens() //returns nested dictionary, composed of the three dictionaries that were created in the class and set in the setTokens() method.
+    {
+        Hashtable<String, Hashtable> test = new Hashtable<String, Hashtable>();
+        setTokens();
+
+        test.put("0", keywords);
+        test.put("1", operators);
+        test.put("2", specialSymbols);
+
+        return test;
+    }
+}
+
+/* //Neseted hashmap example: from https://www.baeldung.com/java-nested-hashmaps
+public Map<Integer, String> buildInnerMap(List<String> batterList) {
+     Map<Integer, String> innerBatterMap = new HashMap<Integer, String>();
+     int index = 1;
+     for (String item : batterList) {
+         innerBatterMap.put(index, item);
+         index++;
+     }
+     return innerBatterMap;
+}
+ */
+/*
+class Token:
+    def __init__(self, type, id, value):
+        self.type = type
+        self.id = id
+        self.value = value
+
+    def getData(self):
+        return [self.type, self.id, self.value]
+ */
