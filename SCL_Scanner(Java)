@@ -1,0 +1,218 @@
+//Incomplete SCL_Scanner, took a while to decipher the origional python version and I had to look up alot of stuff to find out how to implement it in Java. 
+//Could charitably be described as 1/4 finished. 
+
+//import json
+//import sys
+
+//package com.journaldev.readfileslinebyline;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList; // import the ArrayList class
+
+public class SCL_Scanner {
+    public static void main(String[] args)
+    {
+        //
+      //  remove_items();
+        splitStatements('"');
+    }
+
+    //
+    public static void remove_items()
+    {
+        //Error catching: to do
+        /*
+         try:
+        file = open(File_name, 'r')
+    except:
+        print("No such file or directory: ", File_name)
+        exit(2)
+         */
+        BufferedReader reader; //reference: https://www.digitalocean.com/community/tutorials/java-read-file-line-by-line
+
+        //call splitStatements
+        boolean Comment = false;
+        String[] lineList; //Not sure if correct type
+        String[] lineTokens; //Not sure if correct type
+
+        int loopCount = 0; //Empty space token filter
+        try{ //equivalent to for line in lineList: (from SCL_Scanner.py)
+            reader = new BufferedReader(new FileReader("welcome.scl"));
+            String line = reader.readLine();
+                System.out.println("test second try block. for testing purposes."); //For testing purposes, delete before submission
+            while (line != null)
+            {
+         //       System.out.println(line); //Prints out file, for testing purposes
+                line = reader.readLine();
+                if (line == null)
+                {
+                    break;
+                }
+               //     System.out.println("line: "+ line);
+                  //  System.out.println("Test: \\");
+                if (line.charAt(line.length() - 1) == '\\' && line.charAt(line.length()) == 'n') //Not sure if correct logic.
+                {
+                /*
+                    for line in lineList:
+                    if '\n' in line[len(line) - 1]:
+                    modifiedStr = line[len(line) - 1]
+                    modifiedStr = modifiedStr[:-1]
+                    line[len(line) - 1] = modifiedStr
+                    lineList[loopCount] = line
+                    loopCount += 1
+
+                 */
+                }
+            }
+            reader.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void splitStatements(char lineCharacter){
+        //try block
+  //      String[] lineTokens; //Not sure if correct type
+        ArrayList<String> lineTokens = new ArrayList<String>();
+
+        int splitLocation; //= line.find("\"");
+            String beforeStr; //make a substring of the current line with  splitLocation as the index/stopping point
+            String afterStr; //Same concept as beforeStr, just in this case the substring is what comes after the index (splitLocation)
+            int SecondSplitLocation; //
+            String strStatement;
+            //String afterStr;
+        String[] beforeStatementTokens; //Not sure if correct type, might need to be a list, array, dictionary, ect..
+        String afterStatementTokens; //^Ditto
+       // lineTokens
+
+        BufferedReader reader;
+        try {
+      //      String[] lineTokens;
+            reader = new BufferedReader(new FileReader("welcome.scl"));
+            String line = reader.readLine();
+
+            BufferedReader tokenReader;
+            tokenReader = new BufferedReader(new FileReader("Tokens.txt")); //Won't work as Tokens.java would need to be outside the src folder.
+            String Token = tokenReader.readLine(); //not sure if correct, haven't tested yet...
+
+            switch (lineCharacter)
+            {
+                case '\"':
+                    splitLocation = line.indexOf(lineCharacter);
+                        System.out.println("Line (for testing purposes): "+ line);
+                        System.out.println("Line Character (for testing purposes): "+lineCharacter);
+                        System.out.println("splitLocation (for testing purposes): "+splitLocation);
+                    beforeStr = line.substring(0, splitLocation);
+                    afterStr = line.substring(splitLocation);
+                    SecondSplitLocation = splitLocation + afterStr.indexOf("\"") + 1;
+                    strStatement = line.substring(splitLocation, SecondSplitLocation + 1);
+                    beforeStatementTokens = beforeStr.split(" "); //
+                    while(Token != null) //Originally: for token in beforeStatementTokens:  lineTokens.append(token)
+                    {
+                        System.out.println("test while(Token != null)");
+                    }
+                   // lineTokens = new String[39]; //Not sure how large it needs to be, this is a placeholder value
+
+                    //            lineTokens.append(strStatement)
+                    //
+                    //            afterStatementTokens = afterStr.split(' ')
+                    //            for token in afterStatementTokens:
+                    //                lineTokens.append(token)
+                    //
+                    //            lineList.append(lineTokens)
+                    //            continue
+                    break;
+                case '^':
+                    break;
+                case '<':
+                    break;
+                case '[':
+                    break;
+                default:
+                    System.out.println("Error with lineCharacter for splitLocation. ");
+                    break;
+            }
+       /*   //  while (line != null)
+          //  {
+                splitLocation = line.indexOf(lineCharacter);
+                beforeStr = line.substring(0, splitLocation);
+                afterStr = line.substring(splitLocation);
+         //       SecondSplitLocation = splitLocation + afterStr.indexOf('changes depending on lineCharacter') + 1;
+          //      strStatement = line.substring(splitLocation, SecondSplitLocation + 1);
+                beforeStatementTokens = beforeStr.split(" "); // */
+                //            for token in beforeStatementTokens:
+            //                lineTokens.append(token)
+            //while (token != afterStatementTokens)
+                //{
+//
+                //}
+          //  }
+            reader.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+            //catch block
+        /*
+                        splitLocation = line.find('"')
+                        beforeStr = line[:splitLocation]
+                        afterStr = line[splitLocation:]
+                        secondSplitLocation = splitLocation + afterStr[1:].find('"') + 1
+                        strStatement = line[splitLocation:secondSplitLocation + 1]
+                        afterStr = line[secondSplitLocation + 1:]
+
+                        beforeStatementTokens = beforeStr.split(' ')
+                        for token in beforeStatementTokens:
+                            lineTokens.append(token)
+
+                        lineTokens.append(strStatement)
+
+                        if afterStr != '\n':
+                            afterStatementTokens = afterStr.split(' ')
+                            for token in afterStatementTokens:
+                                lineTokens.append(token)
+
+                        lineList.append(lineTokens)
+                        continue
+         */
+    }
+/* //Skeleton methods that haven't been implemented yet. Disabled to lower amount of warnings in my IDE. 
+   //Implementation for most of these should be comparitively simple, excluding the GenerateTokenList() method
+    //
+    public static void filter_file()
+    {
+
+    }
+
+    //Checks if a string is a float
+    public static void isFloat(int num)
+    {
+
+    }
+
+    //Converts list to dictionary
+    public static void Convert()
+    {
+
+    }
+
+    //Adds two dictionaries together
+    public static void merge_dictionaries()
+    {
+
+    }
+
+    //Main scanner method
+    public static void GenerateTokenList()
+    {
+
+    }
+ */
+}
