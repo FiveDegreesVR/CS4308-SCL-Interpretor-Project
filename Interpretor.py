@@ -112,6 +112,7 @@ if __name__ == '__main__':
 
     outfile.close()
 
+    print("\nCreated ", sysArgv[2], "file: ")
     outfile = open(sysArgv[2], "r")
     print(outfile.read())
 
