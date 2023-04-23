@@ -91,7 +91,7 @@ def convert(root):
 if __name__ == '__main__':
     sysArgv = sys.argv
     ParsedRoot = Parser.Parse(sysArgv[1])
-    ParsedRoot.PrintTree()
+    #ParsedRoot.PrintTree()
 
     outfile = open(sysArgv[2], "w")
 
