@@ -92,11 +92,9 @@
 #     tempList.append(jsonData[item]['value'])
 
 
-
 # # This was just for testing
 # LookAhead(jsonData,3)
 # PTree(jsonData,tempList)
-
 
 
 from Scl_Scanner import *
@@ -105,6 +103,7 @@ from itertools import islice
 from Scl_Scanner import *
 from Token import *
 import json
+
 
 # funtionality of getNextToken was fulfilled in deliverable 1
 # Read in tokens and parse out left to right, top from bottom
@@ -159,19 +158,20 @@ class TreeNode:
         #     self.right = TreeNode(data)
 
 
-#funtionality of getNextToken was fulfilled in deliverable 1
-#Read in tokens and parse out left to right, top from bottom
+# funtionality of getNextToken was fulfilled in deliverable 1
+# Read in tokens and parse out left to right, top from bottom
 
 countTk = -1
+
 
 def GetNextToken(countTk, tokenList):
     countTk += 1
     return tokenList[countTk]
 
-if __name__ == '__main__':
-    sysArgv = sys.argv  # scan file from sys argvs
 
-    tokenList = GenerateTokenList(sysArgv[1])
+def Parse(sysArg):
+
+    tokenList = GenerateTokenList(sysArg)
 
     # example call
     # token = GetNextToken(countTk, tokenList)
@@ -182,8 +182,8 @@ if __name__ == '__main__':
     countIterate = -1
     for item in tokenList:
         root.insert(GetNextToken(countIterate, tokenList).value)
-        #print(GetNextToken(countIterate, tokenList).value)
-        countIterate = countIterate+1
+        # print(GetNextToken(countIterate, tokenList).value)
+        countIterate = countIterate + 1
 
     root.UpdateCounts(0)
-    root.PrintTree()
+    return root
