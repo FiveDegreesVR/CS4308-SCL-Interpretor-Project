@@ -108,7 +108,7 @@ if __name__ == '__main__':
         try:
             ParsedRoot.left.data
         except:
-            break;
+            break
 
     outfile.close()
 
